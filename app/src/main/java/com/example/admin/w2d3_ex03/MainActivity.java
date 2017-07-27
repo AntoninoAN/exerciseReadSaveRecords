@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public EditText et_tittlevalue,et_subtitlevalue,et_updatevalue;
     public Button btnSave,btnRead,btnUpdate,btnDelete;
     public TextView tv_presentvalue;
-    StringBuilder stringBuilder= new StringBuilder();
+    StringBuilder stringBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 readRecord();
                 break;
             case R.id.btn_UpdateValue:
+                updateRecord();
                 break;
             case R.id.btn_DeleteValue:
+                deleteRecord();
                 break;
         }
 
@@ -90,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d(TAG,"saveRecord: Record not Saved.");
     }
     private void readRecord(){
+        tv_presentvalue.setText("");
+        stringBuilder=new StringBuilder();
         String[] projection={FeedEntry._ID,
         FeedEntry.COLUMN_NAME_TITLE,
         FeedEntry.COLUMN_NAME_SUBTITLE};
@@ -131,9 +135,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     selectionArgs
             );
             if (deleted > 0) {
-                Log.d(TAG, "deletedRecord: record deleted");
+                Log.d(TAG, et_tittlevalue.getText().toString());
                 Toast.makeText(MainActivity.this, "RECORD DELETED " + et_tittlevalue.getText().toString(), Toast.LENGTH_SHORT).show();
                 et_tittlevalue.setText("");
+                tv_presentvalue.setText("");
             } else {
                 Log.d(TAG, "deletedRecord: record not deleted");
                 Toast.makeText(MainActivity.this, "RECORD NOT DELETED", Toast.LENGTH_SHORT).show();
@@ -158,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             int count = database.update(FeedEntry.TABLE_NAME, values, selection, selectionArgs);
             if (count > 0) {
                 tv_presentvalue.setText("");
-                tv_presentvalue.setText("Updated "+et_tittlevalue+" for: "+et_updatevalue);
+                tv_presentvalue.setText("Updated "+et_tittlevalue.getText().toString()+" for: "+et_updatevalue.getText().toString());
                 Log.d(TAG, "updatedRecord: Records Updated");
                 et_tittlevalue.setText("");
                 et_updatevalue.setText("");
