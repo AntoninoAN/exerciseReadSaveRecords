@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">w2d3_ex03</string>
+    <string name="lbl_btn_save">SAVE</string>
+    <string name="lbl_btn_read">READ</string>
 </resources>
